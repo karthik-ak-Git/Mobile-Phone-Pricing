@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-Powered Mobile Phone Price Predictor with 99% accuracy. Get instant price predictions and recommendations based on phone specifications.">
+    <meta name="keywords" content="mobile phone, price prediction, AI, machine learning, phone recommendations">
+    <meta name="theme-color" content="#667eea">
     <title>Mobile Phone Price Predictor | AI-Powered 99% Accuracy</title>
     <link rel="stylesheet" href="/static/styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -11,16 +14,19 @@
 </head>
 
 <body>
+    <!-- Skip Navigation Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Header -->
-    <header class="header">
+    <header class="header" role="banner">
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <i class="fas fa-mobile-alt"></i>
+                    <i class="fas fa-mobile-alt" aria-hidden="true"></i>
                     <span>PhonePrice AI</span>
                 </div>
-                <div class="accuracy-badge">
-                    <i class="fas fa-trophy"></i>
+                <div class="accuracy-badge" role="status" aria-label="Model accuracy">
+                    <i class="fas fa-trophy" aria-hidden="true"></i>
                     <span>99% Accuracy</span>
                 </div>
             </div>
@@ -53,24 +59,24 @@
     </section>
 
     <!-- Main Content -->
-    <main class="main">
+    <main class="main" id="main-content" role="main">
         <div class="container">
             <div class="content-wrapper">
                 <!-- Prediction Form -->
                 <div class="prediction-section">
                     <div class="section-header">
-                        <h2><i class="fas fa-mobile-alt"></i> Phone Specifications</h2>
+                        <h2><i class="fas fa-mobile-alt" aria-hidden="true"></i> Phone Specifications</h2>
                         <p>Enter the specifications of your mobile phone to get an instant price prediction</p>
                     </div>
 
-                    <form id="predictionForm" class="prediction-form">
+                    <form id="predictionForm" class="prediction-form" aria-label="Phone specification input form" novalidate>
                         <!-- Quick Actions -->
                         <div class="quick-actions">
-                            <button type="button" id="loadExample" class="btn btn-outline">
-                                <i class="fas fa-lightbulb"></i> Load Example
+                            <button type="button" id="loadExample" class="btn btn-outline" aria-label="Load example phone specifications">
+                                <i class="fas fa-lightbulb" aria-hidden="true"></i> Load Example
                             </button>
-                            <button type="button" id="clearForm" class="btn btn-outline">
-                                <i class="fas fa-eraser"></i> Clear Form
+                            <button type="button" id="clearForm" class="btn btn-outline" aria-label="Clear all form fields">
+                                <i class="fas fa-eraser" aria-hidden="true"></i> Clear Form
                             </button>
                         </div>
 
@@ -78,190 +84,205 @@
                         <div class="form-sections">
                             <!-- Basic Specs -->
                             <div class="form-section">
-                                <h3><i class="fas fa-info-circle"></i> Basic Information</h3>
+                                <h3><i class="fas fa-info-circle" aria-hidden="true"></i> Basic Information</h3>
                                 <div class="form-grid">
                                     <div class="form-group">
                                         <label for="battery_power">
-                                            <i class="fas fa-battery-full"></i> Battery Power (mAh)
+                                            <i class="fas fa-battery-full" aria-hidden="true"></i> Battery Power (mAh)
                                         </label>
                                         <input type="number" id="battery_power" name="battery_power" min="500"
-                                            max="5000" value="3000" required>
-                                        <small>Range: 500 - 5000 mAh</small>
+                                            max="5000" value="3000" required aria-describedby="battery_power_hint" aria-invalid="false">
+                                        <small id="battery_power_hint">Range: 500 - 5000 mAh</small>
+                                        <span class="error-message" role="alert" aria-live="polite"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="mobile_wt">
-                                            <i class="fas fa-weight"></i> Weight (grams)
+                                            <i class="fas fa-weight" aria-hidden="true"></i> Weight (grams)
                                         </label>
                                         <input type="number" id="mobile_wt" name="mobile_wt" min="80" max="300"
-                                            value="180" required>
-                                        <small>Range: 80 - 300 grams</small>
+                                            value="180" required aria-describedby="mobile_wt_hint" aria-invalid="false">
+                                        <small id="mobile_wt_hint">Range: 80 - 300 grams</small>
+                                        <span class="error-message" role="alert" aria-live="polite"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="ram">
-                                            <i class="fas fa-memory"></i> RAM (MB)
+                                            <i class="fas fa-memory" aria-hidden="true"></i> RAM (GB)
                                         </label>
-                                        <input type="number" id="ram" name="ram" min="256" max="16000" value="3000"
-                                            required>
-                                        <small>Range: 256 - 16000 MB</small>
+                                        <input type="number" id="ram" name="ram" min="0.25" max="16" step="0.25" value="3"
+                                            required aria-describedby="ram_hint" aria-invalid="false">
+                                        <small id="ram_hint">Range: 0.25 - 16 GB (e.g., 3 GB = 3000 MB)</small>
+                                        <span class="error-message" role="alert" aria-live="polite"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="int_memory">
-                                            <i class="fas fa-hdd"></i> Internal Memory (GB)
+                                            <i class="fas fa-hdd" aria-hidden="true"></i> Internal Memory (GB)
                                         </label>
                                         <input type="number" id="int_memory" name="int_memory" min="1" max="512"
-                                            value="64" required>
-                                        <small>Range: 1 - 512 GB</small>
+                                            value="64" required aria-describedby="int_memory_hint" aria-invalid="false">
+                                        <small id="int_memory_hint">Range: 1 - 512 GB</small>
+                                        <span class="error-message" role="alert" aria-live="polite"></span>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Performance -->
                             <div class="form-section">
-                                <h3><i class="fas fa-microchip"></i> Performance</h3>
+                                <h3><i class="fas fa-microchip" aria-hidden="true"></i> Performance</h3>
                                 <div class="form-grid">
                                     <div class="form-group">
                                         <label for="clock_speed">
-                                            <i class="fas fa-tachometer-alt"></i> Clock Speed (GHz)
+                                            <i class="fas fa-tachometer-alt" aria-hidden="true"></i> Clock Speed (GHz)
                                         </label>
                                         <input type="number" id="clock_speed" name="clock_speed" min="0.5" max="3.0"
-                                            step="0.1" value="2.0" required>
-                                        <small>Range: 0.5 - 3.0 GHz</small>
+                                            step="0.1" value="2.0" required aria-describedby="clock_speed_hint" aria-invalid="false">
+                                        <small id="clock_speed_hint">Range: 0.5 - 3.0 GHz (Processor speed)</small>
+                                        <span class="error-message" role="alert" aria-live="polite"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="n_cores">
-                                            <i class="fas fa-cogs"></i> Number of Cores
+                                            <i class="fas fa-cogs" aria-hidden="true"></i> Number of Cores
                                         </label>
-                                        <select id="n_cores" name="n_cores" required>
+                                        <select id="n_cores" name="n_cores" required aria-describedby="n_cores_hint" aria-invalid="false">
                                             <option value="1">1 Core</option>
                                             <option value="2">2 Cores</option>
                                             <option value="4" selected>4 Cores</option>
                                             <option value="6">6 Cores</option>
                                             <option value="8">8 Cores</option>
                                         </select>
+                                        <small id="n_cores_hint">Processor core count</small>
+                                        <span class="error-message" role="alert" aria-live="polite"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="talk_time">
-                                            <i class="fas fa-phone"></i> Talk Time (hours)
+                                            <i class="fas fa-phone" aria-hidden="true"></i> Talk Time (hours)
                                         </label>
                                         <input type="number" id="talk_time" name="talk_time" min="1" max="30" value="18"
-                                            required>
-                                        <small>Range: 1 - 30 hours</small>
+                                            required aria-describedby="talk_time_hint" aria-invalid="false">
+                                        <small id="talk_time_hint">Range: 1 - 30 hours (Battery life during calls)</small>
+                                        <span class="error-message" role="alert" aria-live="polite"></span>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Camera -->
                             <div class="form-section">
-                                <h3><i class="fas fa-camera"></i> Camera</h3>
+                                <h3><i class="fas fa-camera" aria-hidden="true"></i> Camera</h3>
                                 <div class="form-grid">
                                     <div class="form-group">
                                         <label for="pc">
-                                            <i class="fas fa-camera"></i> Primary Camera (MP)
+                                            <i class="fas fa-camera" aria-hidden="true"></i> Primary Camera (MP)
                                         </label>
-                                        <input type="number" id="pc" name="pc" min="0" max="100" value="12" required>
-                                        <small>Range: 0 - 100 MP</small>
+                                        <input type="number" id="pc" name="pc" min="0" max="100" value="12" required aria-describedby="pc_hint" aria-invalid="false">
+                                        <small id="pc_hint">Range: 0 - 100 MP (Rear camera megapixels)</small>
+                                        <span class="error-message" role="alert" aria-live="polite"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="fc">
-                                            <i class="fas fa-camera-retro"></i> Front Camera (MP)
+                                            <i class="fas fa-camera-retro" aria-hidden="true"></i> Front Camera (MP)
                                         </label>
-                                        <input type="number" id="fc" name="fc" min="0" max="50" value="8" required>
-                                        <small>Range: 0 - 50 MP</small>
+                                        <input type="number" id="fc" name="fc" min="0" max="50" value="8" required aria-describedby="fc_hint" aria-invalid="false">
+                                        <small id="fc_hint">Range: 0 - 50 MP (Selfie camera megapixels)</small>
+                                        <span class="error-message" role="alert" aria-live="polite"></span>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Display -->
                             <div class="form-section">
-                                <h3><i class="fas fa-tv"></i> Display</h3>
+                                <h3><i class="fas fa-tv" aria-hidden="true"></i> Display</h3>
                                 <div class="form-grid">
                                     <div class="form-group">
                                         <label for="px_height">
-                                            <i class="fas fa-arrows-alt-v"></i> Pixel Height
+                                            <i class="fas fa-arrows-alt-v" aria-hidden="true"></i> Pixel Height
                                         </label>
                                         <input type="number" id="px_height" name="px_height" min="100" max="4000"
-                                            value="1920" required>
-                                        <small>Range: 100 - 4000 pixels</small>
+                                            value="1920" required aria-describedby="px_height_hint" aria-invalid="false">
+                                        <small id="px_height_hint">Range: 100 - 4000 pixels (Screen resolution height)</small>
+                                        <span class="error-message" role="alert" aria-live="polite"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="px_width">
-                                            <i class="fas fa-arrows-alt-h"></i> Pixel Width
+                                            <i class="fas fa-arrows-alt-h" aria-hidden="true"></i> Pixel Width
                                         </label>
                                         <input type="number" id="px_width" name="px_width" min="100" max="4000"
-                                            value="1080" required>
-                                        <small>Range: 100 - 4000 pixels</small>
+                                            value="1080" required aria-describedby="px_width_hint" aria-invalid="false">
+                                        <small id="px_width_hint">Range: 100 - 4000 pixels (Screen resolution width)</small>
+                                        <span class="error-message" role="alert" aria-live="polite"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="sc_h">
-                                            <i class="fas fa-ruler-vertical"></i> Screen Height (cm)
+                                            <i class="fas fa-ruler-vertical" aria-hidden="true"></i> Screen Height (cm)
                                         </label>
                                         <input type="number" id="sc_h" name="sc_h" min="3.0" max="8.0" step="0.1"
-                                            value="6.0" required>
-                                        <small>Range: 3.0 - 8.0 cm</small>
+                                            value="6.0" required aria-describedby="sc_h_hint" aria-invalid="false">
+                                        <small id="sc_h_hint">Range: 3.0 - 8.0 cm (Physical screen height)</small>
+                                        <span class="error-message" role="alert" aria-live="polite"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="sc_w">
-                                            <i class="fas fa-ruler-horizontal"></i> Screen Width (cm)
+                                            <i class="fas fa-ruler-horizontal" aria-hidden="true"></i> Screen Width (cm)
                                         </label>
                                         <input type="number" id="sc_w" name="sc_w" min="2.0" max="6.0" step="0.1"
-                                            value="3.0" required>
-                                        <small>Range: 2.0 - 6.0 cm</small>
+                                            value="3.0" required aria-describedby="sc_w_hint" aria-invalid="false">
+                                        <small id="sc_w_hint">Range: 2.0 - 6.0 cm (Physical screen width)</small>
+                                        <span class="error-message" role="alert" aria-live="polite"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="m_dep">
-                                            <i class="fas fa-cube"></i> Mobile Depth (cm)
+                                            <i class="fas fa-cube" aria-hidden="true"></i> Mobile Depth (cm)
                                         </label>
                                         <input type="number" id="m_dep" name="m_dep" min="0.1" max="2.0" step="0.1"
-                                            value="0.7" required>
-                                        <small>Range: 0.1 - 2.0 cm</small>
+                                            value="0.7" required aria-describedby="m_dep_hint" aria-invalid="false">
+                                        <small id="m_dep_hint">Range: 0.1 - 2.0 cm (Phone thickness)</small>
+                                        <span class="error-message" role="alert" aria-live="polite"></span>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Features -->
                             <div class="form-section">
-                                <h3><i class="fas fa-star"></i> Features</h3>
+                                <h3><i class="fas fa-star" aria-hidden="true"></i> Features</h3>
                                 <div class="form-grid features-grid">
                                     <div class="form-group checkbox-group">
                                         <label class="checkbox-label">
-                                            <input type="checkbox" id="blue" name="blue" checked>
+                                            <input type="checkbox" id="blue" name="blue" checked aria-label="Bluetooth support">
                                             <span class="checkmark"></span>
-                                            <i class="fab fa-bluetooth-b"></i> Bluetooth
+                                            <i class="fab fa-bluetooth-b" aria-hidden="true"></i> Bluetooth
                                         </label>
                                     </div>
                                     <div class="form-group checkbox-group">
                                         <label class="checkbox-label">
-                                            <input type="checkbox" id="dual_sim" name="dual_sim" checked>
+                                            <input type="checkbox" id="dual_sim" name="dual_sim" checked aria-label="Dual SIM support">
                                             <span class="checkmark"></span>
-                                            <i class="fas fa-sim-card"></i> Dual SIM
+                                            <i class="fas fa-sim-card" aria-hidden="true"></i> Dual SIM
                                         </label>
                                     </div>
                                     <div class="form-group checkbox-group">
                                         <label class="checkbox-label">
-                                            <input type="checkbox" id="four_g" name="four_g" checked>
+                                            <input type="checkbox" id="four_g" name="four_g" checked aria-label="4G network support">
                                             <span class="checkmark"></span>
-                                            <i class="fas fa-signal"></i> 4G Support
+                                            <i class="fas fa-signal" aria-hidden="true"></i> 4G Support
                                         </label>
                                     </div>
                                     <div class="form-group checkbox-group">
                                         <label class="checkbox-label">
-                                            <input type="checkbox" id="three_g" name="three_g" checked>
+                                            <input type="checkbox" id="three_g" name="three_g" checked aria-label="3G network support">
                                             <span class="checkmark"></span>
-                                            <i class="fas fa-network-wired"></i> 3G Support
+                                            <i class="fas fa-network-wired" aria-hidden="true"></i> 3G Support
                                         </label>
                                     </div>
                                     <div class="form-group checkbox-group">
                                         <label class="checkbox-label">
-                                            <input type="checkbox" id="touch_screen" name="touch_screen" checked>
+                                            <input type="checkbox" id="touch_screen" name="touch_screen" checked aria-label="Touch screen support">
                                             <span class="checkmark"></span>
-                                            <i class="fas fa-hand-pointer"></i> Touch Screen
+                                            <i class="fas fa-hand-pointer" aria-hidden="true"></i> Touch Screen
                                         </label>
                                     </div>
                                     <div class="form-group checkbox-group">
                                         <label class="checkbox-label">
-                                            <input type="checkbox" id="wifi" name="wifi" checked>
+                                            <input type="checkbox" id="wifi" name="wifi" checked aria-label="WiFi support">
                                             <span class="checkmark"></span>
-                                            <i class="fas fa-wifi"></i> WiFi
+                                            <i class="fas fa-wifi" aria-hidden="true"></i> WiFi
                                         </label>
                                     </div>
                                 </div>
@@ -270,11 +291,11 @@
 
                         <!-- Submit Button -->
                         <div class="submit-section">
-                            <button type="submit" class="btn btn-primary btn-predict" id="predictBtn">
-                                <i class="fas fa-brain"></i>
+                            <button type="submit" class="btn btn-primary btn-predict" id="predictBtn" aria-label="Submit form to predict phone price">
+                                <i class="fas fa-brain" aria-hidden="true"></i>
                                 <span>Predict Price</span>
-                                <div class="loading-spinner" style="display: none;">
-                                    <i class="fas fa-spinner fa-spin"></i>
+                                <div class="loading-spinner" style="display: none;" role="status" aria-label="Processing prediction">
+                                    <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
                                 </div>
                             </button>
                         </div>
@@ -282,9 +303,9 @@
                 </div>
 
                 <!-- Results Section -->
-                <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-section" id="resultsSection" style="display: none;" role="region" aria-live="polite" aria-label="Prediction results">
                     <div class="section-header">
-                        <h2><i class="fas fa-chart-line"></i> Prediction Results</h2>
+                        <h2><i class="fas fa-chart-line" aria-hidden="true"></i> Prediction Results</h2>
                         <p>AI-powered analysis of your mobile phone specifications</p>
                     </div>
 

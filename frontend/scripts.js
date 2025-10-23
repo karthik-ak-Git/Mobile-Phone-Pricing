@@ -115,10 +115,18 @@ class PhonePricePredictor {
                 if (element.type === 'checkbox') {
                     element.checked = specs[key] === 1;
                 } else {
-                    element.value = specs[key];
+                    // Convert RAM from MB to GB for display
+                    if (key === 'ram' && specs[key] >= 256) {
+                        element.value = (specs[key] / 1000).toFixed(2);
+                    } else {
+                        element.value = specs[key];
+                    }
                 }
             }
         });
+        
+        // Announce to screen readers
+        this.announceToScreenReader('Example phone specifications loaded successfully');
     }
 
     clearForm() {
@@ -131,25 +139,63 @@ class PhonePricePredictor {
         const value = parseFloat(input.value);
         const min = parseFloat(input.min);
         const max = parseFloat(input.max);
+        const errorSpan = input.parentElement.querySelector('.error-message');
 
-        if (input.type === 'number' && (value < min || value > max)) {
+        if (input.type === 'number' && (isNaN(value) || value < min || value > max)) {
+            input.setAttribute('aria-invalid', 'true');
             input.style.borderColor = '#f56565';
             input.style.backgroundColor = '#fed7d7';
+            
+            if (errorSpan) {
+                if (isNaN(value)) {
+                    errorSpan.textContent = 'Please enter a valid number';
+                } else if (value < min) {
+                    errorSpan.textContent = `Value must be at least ${min}`;
+                } else {
+                    errorSpan.textContent = `Value must be at most ${max}`;
+                }
+            }
+            return false;
         } else {
+            input.setAttribute('aria-invalid', 'false');
             input.style.borderColor = '#e2e8f0';
             input.style.backgroundColor = 'white';
+            if (errorSpan) {
+                errorSpan.textContent = '';
+            }
+            return true;
         }
     }
 
     async makePrediction() {
         // Show loading state
         this.setLoadingState(true);
+        
+        // Validate all inputs before submission
+        let isValid = true;
+        const inputs = this.form.querySelectorAll('input[type="number"]');
+        inputs.forEach(input => {
+            if (!this.validateInput(input)) {
+                isValid = false;
+            }
+        });
+
+        if (!isValid) {
+            this.showNotification('Please correct the validation errors before submitting.', 'error');
+            this.setLoadingState(false);
+            // Focus on first invalid input
+            const firstInvalid = this.form.querySelector('[aria-invalid="true"]');
+            if (firstInvalid) {
+                firstInvalid.focus();
+            }
+            return;
+        }
 
         try {
             // Collect form data
             const formData = this.collectFormData();
 
-            // Validate data
+            // Validate data ranges
             if (!this.validateFormData(formData)) {
                 this.showNotification('Please check all input values are within valid ranges.', 'error');
                 this.setLoadingState(false);
@@ -166,16 +212,23 @@ class PhonePricePredictor {
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                if (response.status === 503) {
+                    throw new Error('Service is temporarily unavailable. Please try again in a moment.');
+                } else if (response.status === 500) {
+                    throw new Error('Server error. Please check your inputs and try again.');
+                }
+                throw new Error(`Request failed with status ${response.status}`);
             }
 
             const result = await response.json();
             this.displayResults(result);
             this.showNotification('Prediction completed successfully!', 'success');
+            this.announceToScreenReader('Prediction results are now available');
 
         } catch (error) {
             console.error('Prediction failed:', error);
-            this.showNotification('Prediction failed. Please try again.', 'error');
+            this.showNotification(error.message || 'Prediction failed. Please try again.', 'error');
+            this.announceToScreenReader('Prediction failed. Please check your connection and try again.');
         } finally {
             this.setLoadingState(false);
         }
@@ -195,7 +248,12 @@ class PhonePricePredictor {
         numericFields.forEach(field => {
             const element = form.querySelector(`#${field}`);
             if (element) {
-                formData[field] = parseFloat(element.value) || 0;
+                let value = parseFloat(element.value) || 0;
+                // Convert RAM from GB to MB for API
+                if (field === 'ram') {
+                    value = value * 1000; // Convert GB to MB
+                }
+                formData[field] = value;
             }
         });
 
@@ -369,6 +427,32 @@ class PhonePricePredictor {
             case 'warning': return '#ed8936';
             default: return '#4299e1';
         }
+    }
+
+    announceToScreenReader(message) {
+        // Create or use existing live region for screen reader announcements
+        let liveRegion = document.getElementById('sr-live-region');
+        if (!liveRegion) {
+            liveRegion = document.createElement('div');
+            liveRegion.id = 'sr-live-region';
+            liveRegion.setAttribute('role', 'status');
+            liveRegion.setAttribute('aria-live', 'polite');
+            liveRegion.setAttribute('aria-atomic', 'true');
+            liveRegion.style.position = 'absolute';
+            liveRegion.style.left = '-10000px';
+            liveRegion.style.width = '1px';
+            liveRegion.style.height = '1px';
+            liveRegion.style.overflow = 'hidden';
+            document.body.appendChild(liveRegion);
+        }
+        
+        // Update the message
+        liveRegion.textContent = message;
+        
+        // Clear after announcement
+        setTimeout(() => {
+            liveRegion.textContent = '';
+        }, 1000);
     }
 
     displayRecommendations(phones) {
