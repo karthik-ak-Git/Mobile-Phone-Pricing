@@ -124,7 +124,7 @@ class PhonePricePredictor {
                 }
             }
         });
-        
+
         // Announce to screen readers
         this.announceToScreenReader('Example phone specifications loaded successfully');
     }
@@ -145,7 +145,7 @@ class PhonePricePredictor {
             input.setAttribute('aria-invalid', 'true');
             input.style.borderColor = '#f56565';
             input.style.backgroundColor = '#fed7d7';
-            
+
             if (errorSpan) {
                 if (isNaN(value)) {
                     errorSpan.textContent = 'Please enter a valid number';
@@ -170,7 +170,7 @@ class PhonePricePredictor {
     async makePrediction() {
         // Show loading state
         this.setLoadingState(true);
-        
+
         // Validate all inputs before submission
         let isValid = true;
         const inputs = this.form.querySelectorAll('input[type="number"]');
@@ -445,10 +445,10 @@ class PhonePricePredictor {
             liveRegion.style.overflow = 'hidden';
             document.body.appendChild(liveRegion);
         }
-        
+
         // Update the message
         liveRegion.textContent = message;
-        
+
         // Clear after announcement
         setTimeout(() => {
             liveRegion.textContent = '';

@@ -291,6 +291,7 @@ body {
         opacity: 0;
         transform: translateY(-5px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -683,7 +684,7 @@ body {
     .form-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .features-grid {
         grid-template-columns: 1fr;
     }
@@ -718,27 +719,28 @@ body {
         flex-direction: column;
         gap: 1rem;
     }
-    
+
     .btn-predict {
         width: 100%;
         max-width: none;
     }
-    
+
     /* Increase touch targets for mobile */
     .checkbox-label {
         padding: 1rem;
         min-height: 44px;
     }
-    
+
     .btn {
         min-height: 44px;
         min-width: 44px;
     }
-    
+
     .form-group input,
     .form-group select {
         min-height: 44px;
-        font-size: 16px; /* Prevents zoom on iOS */
+        font-size: 16px;
+        /* Prevents zoom on iOS */
     }
 }
 
@@ -1102,6 +1104,7 @@ body {
         opacity: 0;
         transform: translateY(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -1113,6 +1116,7 @@ body {
         opacity: 0;
         transform: scale(0.95);
     }
+
     to {
         opacity: 1;
         transform: scale(1);
@@ -1129,18 +1133,35 @@ body {
     animation-fill-mode: backwards;
 }
 
-.form-section:nth-child(1) { animation-delay: 0.1s; }
-.form-section:nth-child(2) { animation-delay: 0.2s; }
-.form-section:nth-child(3) { animation-delay: 0.3s; }
-.form-section:nth-child(4) { animation-delay: 0.4s; }
-.form-section:nth-child(5) { animation-delay: 0.5s; }
+.form-section:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.form-section:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.form-section:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.form-section:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.form-section:nth-child(5) {
+    animation-delay: 0.5s;
+}
 
 .phone-card {
     animation: phoneCardSlideIn 0.4s ease;
 }
 
 /* Smooth transitions for all interactive elements */
-button, input, select, .checkbox-label {
+button,
+input,
+select,
+.checkbox-label {
     transition: all 0.2s ease;
 }
 
